@@ -24,8 +24,19 @@ type NowPlaying struct {
 	DurationMS int    `json:"duration_ms"`
 }
 
+// Manifest contains metadata about the plugin.
+type Manifest struct {
+	Type    string `json:"type"` // e.g., "audio_source"
+	Name    string `json:"name"`
+	Repo    string `json:"repo"`
+	Author  string `json:"author"`
+	Image   string `json:"image"`
+	Version string `json:"version"`
+}
+
 // Controller is the interface that every Zenos music plugin must implement.
 type Controller interface {
+	GetManifest() Manifest
 	IsUp() bool
 	GetNowPlaying() NowPlaying
 	Play() error

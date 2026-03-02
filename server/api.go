@@ -32,6 +32,7 @@ func (api *API) AddRoute(pattern string, handler http.HandlerFunc) {
 
 // RegisterRoutes attaches standard endpoints to the provided HTTP Mux.
 func (api *API) RegisterRoutes(mux *http.ServeMux) {
+	mux.HandleFunc("GET /v1/manifest", api.handleManifest)
 	mux.HandleFunc("GET /v1/status", api.handleStatus)
 	mux.HandleFunc("GET /v1/now-playing", api.handleNowPlaying)
 
@@ -47,6 +48,11 @@ func (api *API) RegisterRoutes(mux *http.ServeMux) {
 	for pattern, h := range api.additionalRoutes {
 		mux.HandleFunc(pattern, h)
 	}
+}
+
+func (api *API) handleManifest(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(api.ctrl.GetManifest())
 }
 
 func (api *API) handleStatus(w http.ResponseWriter, r *http.Request) {
