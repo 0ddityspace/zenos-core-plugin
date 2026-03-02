@@ -5,7 +5,8 @@ import (
 	"log/slog"
 	"net/http"
 	"strconv"
-	"zenos-core-plugin/pluginapi"
+
+	"github.com/0ddityspace/zenos-core-plugin/pluginapi"
 )
 
 // API exposes a Controller's actions via a standard HTTP interface.
